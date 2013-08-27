@@ -2,9 +2,6 @@
 # Copyright 2013 Lenna X. Peterson. All rights reserved.
 
 import csv
-import logging
-
-logging.basicConfig(level=logging.DEBUG)
 
 
 class WCsv(object):

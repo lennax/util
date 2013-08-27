@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 
 import collections
-import logging
-
-logging.basicConfig(level=logging.DEBUG)
 
 
 class ReadPDB(object):
