@@ -1,3 +1,5 @@
+# Copyright 2013 Lenna X. Peterson. All rights reserved.
+
 def venn(left, right):
     """
     Return a 3-tuple of:

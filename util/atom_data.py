@@ -1,3 +1,4 @@
+# Copyright 2013 Lenna X. Peterson. All rights reserved.
 
 
 class AtomData(object):

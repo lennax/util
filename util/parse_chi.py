@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# Copyright 2013 Lenna X. Peterson. All rights reserved.
 
 from collections import defaultdict
 import csv
