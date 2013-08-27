@@ -1,25 +1,22 @@
 #!/usr/bin/env python
 
-import argparse
-import logging
-
-logging.basicConfig(level=logging.DEBUG)
+import re
 
 
-class Pdbre(object):
+class pdbre(object):
+    # PDB file with or without modifications, PDB code in group 1
+    mod = re.compile(r"""
+                         .*?                 # prefix (lazy)
+                         ([0-9][a-z0-9]{3})  # 1 digit, 3 alphanum (group 1)
+                         .*                  # suffix (greedy)
+                         \.pdb$""", re.IGNORECASE | re.VERBOSE)
 
-    def __init__(self):
-        """CONSTRUCTOR"""
+    # PDB file w/ or w/o modifications or biounit suffix, PDB code in group 1
+    unit = re.compile(r"""
+                         .*?                 # prefix (lazy)
+                         ([0-9][a-z0-9]{3})  # 1 digit, 3 alphanum (group 1)
+                         .*                  # suffix (greedy)
+                         \.pdb[1-9]?$""", re.IGNORECASE | re.VERBOSE)
 
-    @classmethod
-    def commandline(cls, module_args=None):
-        desc = """HELPDESCRIPTION"""
-        a = argparse.ArgumentParser(description=desc)
-
-        args = a.parse_args(module_args)
-        c = cls(**vars(args))
-        return c
-
-
-if __name__ == "__main__":
-    Pdbre.commandline()
+    # Raw PDB file, PDB code in group 1
+    raw = re.compile(r"""([0-9][a-z0-9]{3})\.pdb""", re.IGNORECASE)
