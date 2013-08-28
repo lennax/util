@@ -1,5 +1,6 @@
 # Copyright 2013 Lenna X. Peterson. All rights reserved.
 
+
 def venn(left, right):
     """
     Return a 3-tuple of:
@@ -10,6 +11,7 @@ def venn(left, right):
     left = set(left)
     right = set(right)
     return left - right, left & right, right - left
+
 
 def head(iterable, n=10):
     for i, v in enumerate(iterable):
