@@ -1,9 +1,12 @@
 # Copyright 2013 Lenna X. Peterson. All rights reserved.
 
 import collections
+import os
 
 
 class ReadPDB(object):
+
+    ext = ".pdb"
 
     def __init__(self, pdb_list):
         """Load list of PDBs for iteration"""
@@ -54,3 +57,29 @@ class ReadPDB(object):
         col = line.split()[0]
         if col != first_col or len(col) == val_len:
             return line
+
+    @classmethod
+    def make_method_key(cls, code, method):
+        """Combine PDB code and method"""
+        return cls.method_sep.join((code, method))
+
+    @classmethod
+    def split_method_code(cls, method_key):
+        """Extract PDB code from method key"""
+        return method_key.split(cls.method_sep)[0]
+
+    @classmethod
+    def get_method_raw(cls, method_key):
+        """Remove method (last item) from method key"""
+        return cls.method_sep.join(method_key.split(cls.method_sep)[:-1])
+
+    @classmethod
+    def split_method(cls, method_key):
+        """Extract method from method key"""
+        return method_key.split(cls.method_sep)[-1]
+
+    @classmethod
+    def make_pdbfile(cls, pdbcode, pdb_base, method=None):
+        if method:
+            pdbcode = cls.make_method_key(code=pdbcode, method=method)
+        return os.path.join(pdb_base, pdbcode + cls.ext)
