@@ -33,7 +33,7 @@ class ReadPDB(object):
                 raise ValueError("Invalid PDB code %s", full_code)
             code, chain = self.split_index(full_code, 4)
             if not chain:
-                if len(line[1]) == 1:
+                if len(line[1]) == 1 and line[1].isalpha():
                     chain = line[1]
             pdb_dict[code].append(chain)
         # Convert defaultdict to normal dict
