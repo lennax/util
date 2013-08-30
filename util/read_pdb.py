@@ -27,10 +27,14 @@ class ReadPDB(object):
                 line = self.guess_header(line)
                 if line is None:
                     continue
-            full_code = line.split()[0]
+            line = line.split()
+            full_code = line[0]
             if len(full_code) < 4:
                 raise ValueError("Invalid PDB code %s", full_code)
             code, chain = self.split_index(full_code, 4)
+            if not chain:
+                if len(line[1]) == 1:
+                    chain = line[1]
             pdb_dict[code].append(chain)
         # Convert defaultdict to normal dict
         self.pdb_dict = dict(pdb_dict)
