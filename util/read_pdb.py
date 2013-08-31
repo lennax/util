@@ -6,6 +6,7 @@ import os
 
 class ReadPDB(object):
 
+    method_sep = "-"
     ext = ".pdb"
 
     def __init__(self, pdb_list):
