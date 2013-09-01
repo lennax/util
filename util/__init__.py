@@ -8,3 +8,4 @@ from w_csv import WCsv
 
 # Data analysis and display
 from util_methods import venn, head, range_overlap
+from util_methods import split_index, dict_slice
