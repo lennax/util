@@ -3,6 +3,10 @@
 import re
 
 
+class MissingPDBCode(ValueError):
+    """Exception for missing PDB code"""
+
+
 class pdbre(object):
 
     # Raw PDB file, PDB code in group 1
@@ -25,6 +29,24 @@ class pdbre(object):
                          [1-9] ? $       # optional digit, EOL
                       """, re.IGNORECASE | re.VERBOSE)
 
+    @classmethod
+    def get_code(cls, pdb_string, pdbtype="raw"):
+        """
+        Retrieve code from PDB string
+        pdbtype: name of regexp (raw, mod, unit)
+        """
+        try:
+            regexp = getattr(cls, pdbtype)
+        except AttributeError:
+            raise ValueError("Unknown pdbtype '%s'", pdbtype)
+        else:
+            m = regexp.match(pdb_string)
+            if not m:
+                raise MissingPDBCode(pdb_string)
+            else:
+                return m.group(1)
+
+
 if __name__ == "__main__":
 
     test_data = {
@@ -37,8 +59,9 @@ if __name__ == "__main__":
 
     for pdb_string, result_dict in test_data.iteritems():
         for testname, result in result_dict.iteritems():
-            pattern = getattr(pdbre, testname)
-            match = pattern.match(pdb_string)
-            assert bool(match) == bool(result)
-            if match:
-                assert match.group(1) == "1mbn"
+            try:
+                code = pdbre.get_code(pdb_string, testname)
+            except MissingPDBCode:
+                assert result == 0
+            else:
+                assert code == "1mbn"

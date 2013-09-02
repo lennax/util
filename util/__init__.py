@@ -1,6 +1,6 @@
 # Useful data
 from atom_data import AtomData
-from pdbre import pdbre
+from pdbre import pdbre, MissingPDBCode
 
 # IO
 from read_pdb import ReadPDB
