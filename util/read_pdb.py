@@ -61,11 +61,16 @@ class ReadPDB(object):
 
     @classmethod
     def make_method_key(cls, code, grp, method):
-        """Combine PDB code and method"""
+        """Combine PDB code, PDB group, and method"""
+        # Force join to raise an error if code is missing
+        if not code:
+            code = None
+        else:
+            code = code.upper()
         if grp is None:
             grp = ""
         if method is None:
-            method = ""
+            method = "raw"
         return cls.method_sep.join((code, grp, method))
 
     @classmethod
