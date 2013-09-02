@@ -41,7 +41,7 @@ class pdbre(object):
             except MissingPDBCode:
                 continue
             else:
-                code_to_path[code] = file_path
+                code_to_path[code.upper()] = file_path
         return code_to_path
 
     @classmethod
