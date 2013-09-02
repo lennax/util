@@ -60,9 +60,13 @@ class ReadPDB(object):
             return line
 
     @classmethod
-    def make_method_key(cls, code, method):
+    def make_method_key(cls, code, grp, method):
         """Combine PDB code and method"""
-        return cls.method_sep.join((code, method))
+        if grp is None:
+            grp = ""
+        if method is None:
+            method = ""
+        return cls.method_sep.join((code, grp, method))
 
     @classmethod
     def split_method_code(cls, method_key):
