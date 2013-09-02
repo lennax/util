@@ -1,5 +1,7 @@
 # Copyright 2013 Lenna X. Peterson. All rights reserved.
 
+import glob
+import os
 import re
 
 
@@ -28,6 +30,19 @@ class pdbre(object):
                          \.pdb           # file extension
                          [1-9] ? $       # optional digit, EOL
                       """, re.IGNORECASE | re.VERBOSE)
+
+    @classmethod
+    def pdb_glob(cls, pdb_dir, pdbtype="raw"):
+        """Store all valid PDB paths in a dict keyed by PDB code"""
+        code_to_path = dict()
+        for file_path in glob.iglob(os.path.join(pdb_dir, "*")):
+            try:
+                code = cls.get_code(os.path.basename(file_path), pdbtype)
+            except MissingPDBCode:
+                continue
+            else:
+                code_to_path[code] = file_path
+        return code_to_path
 
     @classmethod
     def get_code(cls, pdb_string, pdbtype="raw"):
