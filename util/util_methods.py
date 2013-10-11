@@ -43,3 +43,31 @@ def dict_slice(the_dict, desired_keys):
 def split_index(s, i):
     """Split a string `s` at the specified index `i`"""
     return s[:i], s[i:]
+
+
+latins = dict(
+    mono=1, di=2, tri=3, tetra=4, penta=5,
+    hexa=6, hepta=7, octa=8, nona=9, deca=10,
+    dodeca=12,
+)
+
+def parse_mer(mer, suffix="meric"):
+    mer = mer.strip().lower()
+    suf_len = len(suffix)
+    if mer[-suf_len:] == suffix:
+        root = mer[:-suf_len]
+    else:
+        raise ValueError("must end in '%s'", suffix)
+    number = latins.get(root)
+    if number is not None:
+        return number
+    else:
+        if root.endswith("-"):
+            try:
+                number = int(root[:-1])
+            except ValueError:
+                pass
+            else:
+                return number
+        else:
+            raise ValueError("unable to parse '%s'", mer)
