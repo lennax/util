@@ -2,13 +2,49 @@
 
 
 class AtomData(object):
+
+    # Maximum ASA for each residue
+    # from Miller et al. 1987, JMB 196: 641-656
+    total_asa = {
+        'A': 113.0,
+        'R': 241.0,
+        'N': 158.0,
+        'D': 151.0,
+        'C': 140.0,
+        'Q': 189.0,
+        'E': 183.0,
+        'G': 85.0,
+        'H': 194.0,
+        'I': 182.0,
+        'L': 180.0,
+        'K': 211.0,
+        'M': 204.0,
+        'F': 218.0,
+        'P': 143.0,
+        'S': 122.0,
+        'T': 146.0,
+        'W': 259.0,
+        'Y': 229.0,
+        'V': 160.0,
+    }
+
+    @classmethod
+    def is_surface(cls, resn, asa, total_asa=None, cutoff=0.1):
+        """Return True if ratio of residue ASA to max ASA >= cutoff"""
+        if total_asa is None:
+            total_asa = cls.total_asa
+        resn = resn.upper()
+        if len(resn) == 3:
+            resn = cls.three_to_one[resn]
+        return float(asa) / total_asa[resn] >= cutoff
+
     three_to_one = {
         'VAL': 'V', 'ILE': 'I', 'LEU': 'L', 'GLU': 'E', 'GLN': 'Q',
         'ASP': 'D', 'ASN': 'N', 'HIS': 'H', 'TRP': 'W', 'PHE': 'F', 'TYR': 'Y',
         'ARG': 'R', 'LYS': 'K', 'SER': 'S', 'THR': 'T', 'MET': 'M', 'ALA': 'A',
         'GLY': 'G', 'PRO': 'P', 'CYS': 'C'}
 
-    one_to_three = dict((o, t) for t, o in three_to_one.iteritems())
+    one_to_three = {o: t for t, o in three_to_one.iteritems()}
 
     res_atom_list = dict(
         ALA=['C', 'CA', 'CB', 'N', 'O'],
