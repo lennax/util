@@ -2,6 +2,42 @@
 
 
 class AtomData(object):
+
+    # Maximum ASA for each residue
+    # from Miller et al. 1987, JMB 196: 641-656
+    total_asa = {
+        'A': 113.0,
+        'R': 241.0,
+        'N': 158.0,
+        'D': 151.0,
+        'C': 140.0,
+        'Q': 189.0,
+        'E': 183.0,
+        'G': 85.0,
+        'H': 194.0,
+        'I': 182.0,
+        'L': 180.0,
+        'K': 211.0,
+        'M': 204.0,
+        'F': 218.0,
+        'P': 143.0,
+        'S': 122.0,
+        'T': 146.0,
+        'W': 259.0,
+        'Y': 229.0,
+        'V': 160.0,
+    }
+
+    @classmethod
+    def is_surface(cls, resn, asa, total_asa=None, cutoff=0.1):
+        """Return True if ratio of residue ASA to max ASA >= cutoff"""
+        if total_asa is None:
+            total_asa = cls.total_asa
+        resn = resn.upper()
+        if len(resn) == 3:
+            resn = cls.three_to_one[resn]
+        return float(asa) / total_asa[resn] >= cutoff
+
     three_to_full = {
         'Val': 'Valine', 'Ile': 'Isoleucine', 'Leu': 'Leucine',
         'Glu': 'Glutamate', 'Gln': 'Glutamine',
@@ -100,23 +136,35 @@ class AtomData(object):
         ),
     )
 
+    alt_chi = dict(
+        chi1=dict(
+            VAL=['N', 'CA', 'CB', 'CG2'],
+        ),
+        chi2=dict(
+            ASP=['CA', 'CB', 'CG', 'OD2'],
+            LEU=['CA', 'CB', 'CG', 'CD2'],
+            PHE=['CA', 'CB', 'CG', 'CD2'],
+            TYR=['CA', 'CB', 'CG', 'CD2'],
+        ),
+    )
+
     chi_atoms = dict(
         ARG=set(['CB', 'CA', 'CG', 'NE', 'N', 'CZ', 'NH1', 'CD']),
         ASN=set(['CB', 'CA', 'N', 'CG', 'OD1']),
-        ASP=set(['CB', 'CA', 'N', 'CG', 'OD1']),
+        ASP=set(['CB', 'CA', 'N', 'CG', 'OD1', 'OD2']),
         CYS=set(['CB', 'CA', 'SG', 'N']),
         GLN=set(['CB', 'CA', 'CG', 'N', 'CD', 'OE1']),
         GLU=set(['CB', 'CA', 'CG', 'N', 'CD', 'OE1']),
         HIS=set(['ND1', 'CB', 'CA', 'CG', 'N']),
         ILE=set(['CG1', 'CB', 'CA', 'CD1', 'N']),
-        LEU=set(['CB', 'CA', 'CG', 'CD1', 'N']),
+        LEU=set(['CB', 'CA', 'CG', 'CD1', 'CD2', 'N']),
         LYS=set(['CB', 'CA', 'CG', 'CE', 'N', 'NZ', 'CD']),
         MET=set(['CB', 'CA', 'CG', 'CE', 'N', 'SD']),
-        PHE=set(['CB', 'CA', 'CG', 'CD1', 'N']),
+        PHE=set(['CB', 'CA', 'CG', 'CD1', 'CD2', 'N']),
         PRO=set(['CB', 'CA', 'N', 'CG', 'CD']),
         SER=set(['OG', 'CB', 'CA', 'N']),
         THR=set(['CB', 'CA', 'OG1', 'N']),
         TRP=set(['CB', 'CA', 'CG', 'CD1', 'N']),
-        TYR=set(['CB', 'CA', 'CG', 'CD1', 'N']),
-        VAL=set(['CG1', 'CB', 'CA', 'N']),
+        TYR=set(['CB', 'CA', 'CG', 'CD1', 'CD2', 'N']),
+        VAL=set(['CG1', 'CG2', 'CB', 'CA', 'N']),
     )

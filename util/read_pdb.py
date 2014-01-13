@@ -66,11 +66,15 @@ class ReadPDB(object):
         if not code:
             code = None
         else:
-            code = code.upper()
+            code = code.encode().upper()
         if grp is None:
             grp = ""
+        else:
+            grp = grp.encode()
         if method is None:
             method = "raw"
+        else:
+            method = method.encode()
         return cls.method_sep.join((code, grp, method))
 
     @classmethod
