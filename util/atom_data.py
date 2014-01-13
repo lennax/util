@@ -2,13 +2,24 @@
 
 
 class AtomData(object):
+    three_to_full = {
+        'Val': 'Valine', 'Ile': 'Isoleucine', 'Leu': 'Leucine',
+        'Glu': 'Glutamate', 'Gln': 'Glutamine',
+        'Asp': 'Aspartate', 'Asn': 'Asparagine', 'His': 'Histidine',
+        'Trp': 'Tryptophan', 'Phe': 'Phenylalanine', 'Tyr': 'Tyrosine',
+        'Arg': 'Arginine', 'Lys': 'Lysine',
+        'Ser': 'Serine', 'Thr': 'Threonine',
+        'Met': 'Methionine', 'Ala': 'Alanine',
+        'Gly': 'Glycine', 'Pro': 'Proline', 'Cys': 'Cysteine'}
+
     three_to_one = {
         'VAL': 'V', 'ILE': 'I', 'LEU': 'L', 'GLU': 'E', 'GLN': 'Q',
         'ASP': 'D', 'ASN': 'N', 'HIS': 'H', 'TRP': 'W', 'PHE': 'F', 'TYR': 'Y',
         'ARG': 'R', 'LYS': 'K', 'SER': 'S', 'THR': 'T', 'MET': 'M', 'ALA': 'A',
         'GLY': 'G', 'PRO': 'P', 'CYS': 'C'}
 
-    one_to_three = dict((o, t) for t, o in three_to_one.iteritems())
+    one_to_three = {o: t for t, o in three_to_one.iteritems()}
+    one_to_full = {o: three_to_full[t] for t, o in three_to_one.iteritems()}
 
     res_atom_list = dict(
         ALA=['C', 'CA', 'CB', 'N', 'O'],
