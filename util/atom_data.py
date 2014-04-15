@@ -1,6 +1,15 @@
 # Copyright 2013 Lenna X. Peterson. All rights reserved.
 
 
+class classprop(object):
+
+    def __init__(self, f):
+        self.f = classmethod(f)
+
+    def __get__(self, *a):
+        return self.f.__get__(*a)()
+
+
 class AtomData(object):
 
     # Maximum ASA for each residue
@@ -38,6 +47,16 @@ class AtomData(object):
             resn = cls.three_to_one[resn]
         return float(asa) / total_asa[resn] >= cutoff
 
+    three_to_full = {
+        'Val': 'Valine', 'Ile': 'Isoleucine', 'Leu': 'Leucine',
+        'Glu': 'Glutamate', 'Gln': 'Glutamine',
+        'Asp': 'Aspartate', 'Asn': 'Asparagine', 'His': 'Histidine',
+        'Trp': 'Tryptophan', 'Phe': 'Phenylalanine', 'Tyr': 'Tyrosine',
+        'Arg': 'Arginine', 'Lys': 'Lysine',
+        'Ser': 'Serine', 'Thr': 'Threonine',
+        'Met': 'Methionine', 'Ala': 'Alanine',
+        'Gly': 'Glycine', 'Pro': 'Proline', 'Cys': 'Cysteine'}
+
     three_to_one = {
         'VAL': 'V', 'ILE': 'I', 'LEU': 'L', 'GLU': 'E', 'GLN': 'Q',
         'ASP': 'D', 'ASN': 'N', 'HIS': 'H', 'TRP': 'W', 'PHE': 'F', 'TYR': 'Y',
@@ -45,6 +64,14 @@ class AtomData(object):
         'GLY': 'G', 'PRO': 'P', 'CYS': 'C'}
 
     one_to_three = {o: t for t, o in three_to_one.iteritems()}
+
+    @classprop
+    def one_to_full(cls):
+        """
+        This can't see three_to_full unless explicitly passed because
+        dict comprehensions create their own local scope
+        """
+        return {o: cls.three_to_full[t] for t, o in cls.three_to_one.iteritems()}
 
     res_atom_list = dict(
         ALA=['C', 'CA', 'CB', 'N', 'O'],
