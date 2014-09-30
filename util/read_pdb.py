@@ -23,8 +23,11 @@ class ReadPDB(object):
 
     def load_codes(self, pdb_list):
         """Load PDB code and chain(s) from space-delimited list"""
-        with open(pdb_list, "rb") as fh:
-            pisces_list = list(fh)
+        try:
+            with open(pdb_list, "rb") as fh:
+                pisces_list = list(fh)
+        except TypeError:
+            pisces_list = pdb_list
         pdb_dict = collections.defaultdict(list)
         for i, line in enumerate(pisces_list):
             if i == 0:

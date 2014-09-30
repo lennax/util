@@ -59,7 +59,7 @@ class pdbre(object):
             if not m:
                 raise MissingPDBCode(pdb_string)
             else:
-                return m.group(1)
+                return m.group(1).upper()
 
 
 if __name__ == "__main__":
@@ -79,4 +79,4 @@ if __name__ == "__main__":
             except MissingPDBCode:
                 assert result == 0
             else:
-                assert code == "1mbn"
+                assert code == "1MBN", code
