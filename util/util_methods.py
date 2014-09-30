@@ -1,5 +1,8 @@
 # Copyright 2013 Lenna X. Peterson. All rights reserved.
 
+import re
+import StringIO
+
 
 def venn(left, right):
     """
@@ -12,6 +15,15 @@ def venn(left, right):
     right = set(right)
     return left - right, left & right, right - left
 
+_h_re = re.compile(r"[123 ]*H.*")
+
+def strip_h(filename):
+    "Strip hydrogens from PDBfile"
+    with open(filename, "r") as ih:
+        ret = StringIO.StringIO("\n".join(r for r in ih
+                                          if r[:4] != "ATOM"
+                                          or not _h_re.match(r[12:16])))
+    return ret
 
 def head(iterable, n=10):
     for i, v in enumerate(iterable):

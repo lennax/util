@@ -49,8 +49,8 @@ class AtomData(object):
 
     three_to_full = {
         'Val': 'Valine', 'Ile': 'Isoleucine', 'Leu': 'Leucine',
-        'Glu': 'Glutamate', 'Gln': 'Glutamine',
-        'Asp': 'Aspartate', 'Asn': 'Asparagine', 'His': 'Histidine',
+        'Glu': 'Glutamic acid', 'Gln': 'Glutamine',
+        'Asp': 'Aspartic acid', 'Asn': 'Asparagine', 'His': 'Histidine',
         'Trp': 'Tryptophan', 'Phe': 'Phenylalanine', 'Tyr': 'Tyrosine',
         'Arg': 'Arginine', 'Lys': 'Lysine',
         'Ser': 'Serine', 'Thr': 'Threonine',

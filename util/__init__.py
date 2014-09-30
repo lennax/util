@@ -5,6 +5,7 @@ from pdbre import pdbre, MissingPDBCode
 # IO
 from read_pdb import ReadPDB
 from w_csv import WCsv
+from util_methods import strip_h
 
 # Data analysis and display
 from util_methods import venn, head, range_overlap
