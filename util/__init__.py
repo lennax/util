@@ -3,6 +3,7 @@ from atom_data import AtomData
 from pdbre import pdbre, MissingPDBCode
 
 # IO
+from util_methods import read_config
 from util_methods import mkdir_p
 from read_pdb import ReadPDB
 from w_csv import WCsv

@@ -1,10 +1,23 @@
 # Copyright 2013-2014 Lenna X. Peterson. All rights reserved.
 
+import ConfigParser
 import errno
 import os
 import re
 import StringIO
 
+
+def read_config(config_path):
+    """
+    Read in a config file optionally containing whitespace
+    (normally fails)
+    """
+    config = ConfigParser.SafeConfigParser()
+    # Strip whitespace from config
+    # http://stackoverflow.com/a/12822143
+    with open(config_path, "r") as ih:
+        config_data = StringIO.StringIO("\n".join(line.strip() for line in ih))
+    config.readfp(config_data)
 
 def mkdir_p(path):
     """
