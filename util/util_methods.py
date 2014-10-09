@@ -4,6 +4,7 @@ import ConfigParser
 import errno
 import os
 import re
+import shutil
 import StringIO
 
 
@@ -18,6 +19,14 @@ def read_config(config_path):
     with open(config_path, "r") as ih:
         config_data = StringIO.StringIO("\n".join(line.strip() for line in ih))
     config.readfp(config_data)
+
+def copy_file(src, dest):
+    if not os.path.isfile(src):
+        return "source file not found"
+    if not os.path.basename(dest):
+        dest = os.path.join(dest, os.path.basename(src))
+    if os.path.isfile(dest): return
+    shutil.copy(src, dest)
 
 def mkdir_p(path):
     """
