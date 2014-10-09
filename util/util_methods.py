@@ -22,8 +22,6 @@ def read_config(config_path):
     return config
 
 def copy_file(src, dest):
-    if not os.path.isfile(src):
-        return "source file not found"
     if os.path.isfile(dest): return
     shutil.copyfile(src, dest)
 
