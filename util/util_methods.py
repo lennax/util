@@ -19,6 +19,7 @@ def read_config(config_path):
     with open(config_path, "r") as ih:
         config_data = StringIO.StringIO("\n".join(line.strip() for line in ih))
     config.readfp(config_data)
+    return config
 
 def copy_file(src, dest):
     if not os.path.isfile(src):
