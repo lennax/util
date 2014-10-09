@@ -1,4 +1,4 @@
-# Copyright 2013 Lenna X. Peterson. All rights reserved.
+# Copyright 2013-2014 Lenna X. Peterson. All rights reserved.
 
 
 class classprop(object):
