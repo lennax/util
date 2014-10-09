@@ -24,10 +24,8 @@ def read_config(config_path):
 def copy_file(src, dest):
     if not os.path.isfile(src):
         return "source file not found"
-    if not os.path.basename(dest):
-        dest = os.path.join(dest, os.path.basename(src))
     if os.path.isfile(dest): return
-    shutil.copy(src, dest)
+    shutil.copyfile(src, dest)
 
 def mkdir_p(path):
     """
