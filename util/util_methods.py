@@ -83,7 +83,8 @@ def range_overlap(range1, range2):
 
 def dict_slice(the_dict, desired_keys):
     """
-    Return a dict of the named keys from the dict
+    Pop and return a dict of the named keys from the dict
+    NB original dict is modified in place
     the_dict: dict to slice
     desired_keys: keys to return
     """
