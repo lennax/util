@@ -8,6 +8,18 @@ import shutil
 import StringIO
 
 
+class CHDIR(object):
+    def __init__(self, dirname):
+        self.dirname = dirname
+
+    def __enter__(self):
+        self.old_dir = os.getcwd()
+        os.chdir(self.dirname)
+
+    def __exit__(self, exception_type, exception_value, traceback):
+        os.chdir(self.old_dir)
+
+
 def read_config(config_path):
     """
     Read in a config file optionally containing whitespace
