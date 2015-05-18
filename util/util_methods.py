@@ -20,6 +20,11 @@ class CHDIR(object):
         os.chdir(self.old_dir)
 
 
+def missing(*files):
+    "Check whether files are missing or empty"
+    return any(not os.path.isfile(f) or not os.path.getsize(f)
+               for f in files)
+
 def read_config(config_path):
     """
     Read in a config file optionally containing whitespace
