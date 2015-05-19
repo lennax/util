@@ -3,7 +3,8 @@ from atom_data import AtomData
 from pdbre import pdbre, MissingPDBCode
 
 # IO
-from util_methods import CHDIR, copy_file, missing, mkdir_p, read_config
+from util_methods import CHDIR, missing, read_config
+from util_methods import copy_file, mkdir_p, silent_remove
 from read_pdb import ReadPDB
 from w_csv import WCsv
 from util_methods import strip_h

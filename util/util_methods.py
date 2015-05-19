@@ -54,6 +54,16 @@ def mkdir_p(path):
             pass
         else: raise
 
+def silent_remove(path):
+    """
+    Remove file, ignore if missing.
+    """
+    try:
+        os.remove(path)
+    except OSError as e:
+        if e.errno != errno.ENOENT:
+            raise
+
 def venn(left, right):
     """
     Return a 3-tuple of:
