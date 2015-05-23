@@ -64,6 +64,27 @@ def silent_remove(path):
         if e.errno != errno.ENOENT:
             raise
 
+def bash_wrap(cmd, module=None):
+    """
+    Create a subshell to run a command.
+
+    :param cmd: command to run
+    :type cmd: str or list
+    :param module: module to load before running
+    :type module: str
+
+    :returns: str
+    """
+    if not isinstance(cmd, basestring):
+        cmd = " ".join(cmd)
+    if module is None:
+        module_cmd = ""
+    else:
+        module_cmd = "module load {module}; ".format(module=module)
+    kwargs = dict(cmd=cmd, module=module_cmd)
+    full_cmd = '/bin/bash -c "{module}{cmd}"'.format(**kwargs)
+    return full_cmd
+
 def venn(left, right):
     """
     Return a 3-tuple of:

@@ -5,6 +5,7 @@ from pdbre import pdbre, MissingPDBCode
 # IO
 from util_methods import CHDIR, missing, read_config
 from util_methods import copy_file, mkdir_p, silent_remove
+from util_methods import bash_wrap
 from read_pdb import ReadPDB
 from w_csv import WCsv
 from util_methods import strip_h
