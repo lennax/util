@@ -6,6 +6,7 @@ import os
 import re
 import shutil
 import StringIO
+import time
 
 
 class CHDIR(object):
@@ -84,6 +85,30 @@ def bash_wrap(cmd, module=None):
     kwargs = dict(cmd=cmd, module=module_cmd)
     full_cmd = '/bin/bash -c "{module}{cmd}"'.format(**kwargs)
     return full_cmd
+
+def file_suffix(fn, suffix):
+    "Place suffix before dot of fn"
+    fileparts = list(os.path.splitext(fn))
+    fileparts.insert(1, suffix)
+    return "".join(fileparts)
+
+def wait_timeout(proc, limit):
+    "Kill process if it takes longer than limit seconds"
+    start = time.time()
+    end = start + limit
+    interval = min(limit / 100.0, 1.0)
+
+    while True:
+        result = proc.poll()
+        if result is not None:
+            return result
+        if time.time() > end:
+            proc.terminate()
+            time.sleep(10)
+            if proc.poll() is None:
+                proc.kill()
+            return "timeout"
+        time.sleep(interval)
 
 def available_cpu_count():
     """
