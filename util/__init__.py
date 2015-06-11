@@ -3,6 +3,9 @@ from atom_data import AtomData
 from pdbre import pdbre, MissingPDBCode
 
 # IO
+from sql_methods import new_conn, ro_conn, write_conn
+from sql_methods import create_insert_statement
+from sql_methods import db_to_pandas
 from util_methods import CHDIR, file_suffix, missing, read_config
 from util_methods import copy_file, mkdir_p, silent_remove
 from util_methods import available_cpu_count, bash_wrap, wait_timeout
