@@ -4,9 +4,9 @@ import apsw
 import pandas as pd
 
 
-def create_insert_statement(paths_tablename, columns):
-    insert_str = "INSERT INTO {paths_tablename} ({columns}) VALUES ({bindings})"
-    return insert_str.format(paths_tablename=paths_tablename,
+def create_insert_statement(tablename, columns):
+    insert_str = "INSERT INTO {tablename} ({columns}) VALUES ({bindings})"
+    return insert_str.format(tablename=tablename,
                              columns=", ".join(columns),
                              bindings=", ".join([":" + v for v in columns]))
 
