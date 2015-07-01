@@ -1,3 +1,4 @@
+# Copyright 2013-2015 Lenna X. Peterson. All rights reserved.
 # Useful data
 from atom_data import AtomData
 from pdbre import pdbre, MissingPDBCode

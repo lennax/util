@@ -1,3 +1,5 @@
+# Copyright 2013-2015 Lenna X. Peterson. All rights reserved.
+
 from contextlib import contextmanager
 
 import apsw
