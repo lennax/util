@@ -1,13 +1,7 @@
 # Copyright 2013-2015 Lenna X. Peterson. All rights reserved.
 
 
-class classprop(object):
-
-    def __init__(self, f):
-        self.f = classmethod(f)
-
-    def __get__(self, *a):
-        return self.f.__get__(*a)()
+from .meta import classproperty
 
 
 class AtomData(object):
@@ -65,13 +59,13 @@ class AtomData(object):
 
     one_to_three = {o: t for t, o in three_to_one.iteritems()}
 
-    @classprop
+    @classproperty
     def one_to_full(cls):
         """
         This can't see three_to_full unless explicitly passed because
         dict comprehensions create their own local scope
         """
-        return {o: cls.three_to_full[t] for t, o in cls.three_to_one.iteritems()}
+        return {o: cls.three_to_full[t.title()] for t, o in cls.three_to_one.iteritems()}
 
     res_atom_list = dict(
         ALA=['C', 'CA', 'CB', 'N', 'O'],
