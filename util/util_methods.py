@@ -83,7 +83,7 @@ def bash_wrap(cmd, module=None):
     else:
         module_cmd = "module load {module}; ".format(module=module)
     kwargs = dict(cmd=cmd, module=module_cmd)
-    full_cmd = '/bin/bash -c "{module}{cmd}"'.format(**kwargs)
+    full_cmd = '/bin/bash --noprofile -c "{module}{cmd}"'.format(**kwargs)
     return full_cmd
 
 def file_suffix(fn, suffix):
