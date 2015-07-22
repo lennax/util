@@ -21,6 +21,12 @@ class CHDIR(object):
         os.chdir(self.old_dir)
 
 
+def create_insert_statement(tablename, columns):
+    insert_str = "INSERT INTO {tablename} ({columns}) VALUES ({bindings})"
+    return insert_str.format(tablename=tablename,
+                             columns=", ".join(columns),
+                             bindings=", ".join([":" + v for v in columns]))
+
 def missing(*files):
     "Check whether files are missing or empty"
     return any(not os.path.isfile(f) or not os.path.getsize(f)
