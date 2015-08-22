@@ -31,9 +31,9 @@ def db_to_pandas(select, dbf, **kwargs):
     :returns: pandas.DataFrame
     """
     with ro_conn(dbf) as conn:
-        return apsw_to_pandas(select, conn, **kwargs)
+        return conn_to_pandas(select, conn, **kwargs)
 
-def apsw_to_pandas(select, conn, **kwargs):
+def conn_to_pandas(select, conn, **kwargs):
     """
     Load the results of a select into a pandas DataFrame.
 

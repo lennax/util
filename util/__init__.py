@@ -10,7 +10,7 @@ except ImportError:
     pass
 else:
     from sql_methods import new_conn, ro_conn, write_conn
-    from sql_methods import apsw_to_pandas, db_to_pandas
+    from sql_methods import conn_to_pandas, db_to_pandas
 
 from util_methods import create_insert_statement
 from util_methods import CHDIR, file_suffix, missing, read_config
