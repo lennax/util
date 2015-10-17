@@ -22,10 +22,45 @@ class CHDIR(object):
 
 
 def create_insert_statement(tablename, columns):
+    """
+    Create insert statement.
+    e.g. func("mytable", ["foo", "bar"])
+    INSERT INTO mytable (foo, bar) VALUES (:foo, :bar)
+
+    :param tablename: name of table to update
+    :type tablename: str
+    :param columns: columns to set
+    :type columns: list
+    """
     insert_str = "INSERT INTO {tablename} ({columns}) VALUES ({bindings})"
     return insert_str.format(tablename=tablename,
                              columns=", ".join(columns),
                              bindings=", ".join([":" + v for v in columns]))
+
+def create_update_statement(tablename, columns, where):
+    """
+    Create update statement.
+    e.g. func("mytable", ["foo", "bar"], ["id"])
+    UPDATE mytable SET foo=:foo, bar=:bar WHERE id=:id
+
+    :param tablename: name of table to update
+    :type tablename: str
+    :param columns: columns to set
+    :type columns: list
+    :param where: where columns to match
+    :type where: list
+
+    :returns: str
+    """
+    if isinstance(where, basestring):
+        where = [where]
+    if isinstance(columns, basestring):
+        columns = [columns]
+    update_fmt = "UPDATE {tablename} SET {values} WHERE {where}"
+    update_stmt = update_fmt.format(tablename=tablename,
+                                    values=", ".join(["{0}=:{0}".format(c) for c in columns]),
+                                    where=" AND ".join(["{0}=:{0}".format(w) for w in where]))
+    return update_stmt
 
 def missing(*files):
     "Check whether files are missing or empty"
