@@ -7,13 +7,21 @@ import pandas as pd
 
 @contextmanager
 def ro_conn(dbfile):
-    with apsw.Connection(dbfile, flags=apsw.SQLITE_OPEN_READONLY) as conn:
-        yield conn
+    try:
+        with apsw.Connection(dbfile, flags=apsw.SQLITE_OPEN_READONLY) as conn:
+            yield conn
+    except:
+        print dbfile, "not found"
+        raise
 
 @contextmanager
 def write_conn(dbfile):
-    with apsw.Connection(dbfile, flags=apsw.SQLITE_OPEN_READWRITE) as conn:
-        yield conn
+    try:
+        with apsw.Connection(dbfile, flags=apsw.SQLITE_OPEN_READWRITE) as conn:
+            yield conn
+    except:
+        print dbfile, "not found"
+        raise
 
 @contextmanager
 def new_conn(dbfile):
