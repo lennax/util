@@ -10,7 +10,7 @@ def ro_conn(dbfile):
     try:
         with apsw.Connection(dbfile, flags=apsw.SQLITE_OPEN_READONLY) as conn:
             yield conn
-    except:
+    except apsw.CantOpenError:
         print dbfile, "not found"
         raise
 
@@ -19,7 +19,7 @@ def write_conn(dbfile):
     try:
         with apsw.Connection(dbfile, flags=apsw.SQLITE_OPEN_READWRITE) as conn:
             yield conn
-    except:
+    except apsw.CantOpenError:
         print dbfile, "not found"
         raise
 
