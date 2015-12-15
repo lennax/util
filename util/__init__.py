@@ -3,7 +3,12 @@
 # PDB related
 from atom_data import AtomData
 from pdbre import pdbre, MissingPDBCode
-from align_methods import seq1, align, struct_to_seq
+try:
+    import Bio
+except ImportError:
+    pass
+else:
+    from align_methods import seq1, align, struct_to_seq
 
 # IO
 try:
