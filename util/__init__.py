@@ -15,7 +15,8 @@ else:
     from sql_methods import conn_to_pandas, db_to_pandas
 
 from util_methods import create_insert_statement, create_update_statement
-from util_methods import CHDIR, file_suffix, missing, read_config
+from util_methods import CopyToHost, CHDIR
+from util_methods import file_suffix, missing, read_config
 from util_methods import copy_file, mkdir_p, silent_remove
 from util_methods import available_cpu_count, bash_wrap, wait_timeout
 from read_pdb import ReadPDB

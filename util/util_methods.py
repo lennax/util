@@ -2,11 +2,16 @@
 
 import ConfigParser
 import errno
+import logging
 import os
 import re
 import shutil
 import StringIO
+import subprocess
 import time
+import tempfile
+
+logging.basicConfig(level=logging.DEBUG)
 
 
 class CHDIR(object):
@@ -19,6 +24,42 @@ class CHDIR(object):
 
     def __exit__(self, exception_type, exception_value, traceback):
         os.chdir(self.old_dir)
+
+
+class CopyToHost(object):
+    temporary_base_dir = "/scratch"
+
+    def __init__(self, wd, base_dir=None):
+        logging.info(os.uname()[1])
+        if base_dir is None:
+            base_dir = self.temporary_base_dir
+        self.tmpdir = os.path.normpath(tempfile.mkdtemp(dir=base_dir))
+        self.wd = os.path.abspath(wd)
+        self.new_wd = os.path.join(self.tmpdir, os.path.basename(self.wd))
+
+    def push(self):
+        # no need to rsync, dest does not exist
+        shutil.copytree(self.wd, self.new_wd)
+
+    def pull(self):
+        self.sync(source=self.new_wd, dest=os.path.dirname(self.wd))
+
+    @staticmethod
+    def sync(source, dest):
+        cmd = ["rsync", "-az", source, dest]
+        logging.debug(" ".join(cmd))
+        subprocess.check_call(cmd)
+
+    def __enter__(self):
+        self.push()
+        return self
+
+    def __exit__(self, type, value, traceback):
+        try:
+            self.pull()
+        finally:
+            #logging.info("Removing temporary directory")
+            shutil.rmtree(self.tmpdir)
 
 
 def create_insert_statement(tablename, columns):
