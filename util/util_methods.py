@@ -28,14 +28,16 @@ class CHDIR(object):
 
 class CopyToHost(object):
     temporary_base_dir = "/scratch"
+    special_scratch = dict(
+        miffy="/kihara-scratch7",
+        alien="/alien-scratch",
+    )
 
     def __init__(self, wd, base_dir=None):
         hostname = os.uname()[1]
         logging.info(hostname)
         if base_dir is None:
-            base_dir = self.temporary_base_dir
-            if hostname.startswith("miffy"):
-                base_dir = "/kihara-scratch7"
+            base_dir = self.special_scratch.get(hostname, self.temporary_base_dir)
         self.tmpdir = os.path.normpath(tempfile.mkdtemp(dir=base_dir))
         self.wd = os.path.abspath(wd)
         self.new_wd = os.path.join(self.tmpdir, os.path.basename(self.wd))
