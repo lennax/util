@@ -30,9 +30,12 @@ class CopyToHost(object):
     temporary_base_dir = "/scratch"
 
     def __init__(self, wd, base_dir=None):
-        logging.info(os.uname()[1])
+        hostname = os.uname()[1]
+        logging.info(hostname)
         if base_dir is None:
             base_dir = self.temporary_base_dir
+            if hostname.startswith("miffy"):
+                base_dir = "/kihara-scratch7"
         self.tmpdir = os.path.normpath(tempfile.mkdtemp(dir=base_dir))
         self.wd = os.path.abspath(wd)
         self.new_wd = os.path.join(self.tmpdir, os.path.basename(self.wd))
