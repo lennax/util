@@ -245,7 +245,7 @@ def strip_h(filename):
     NB loads entire file into memory, use at your own risk
     """
     with open(filename, "r") as ih:
-        ret = StringIO.StringIO("\n".join(r for r in ih
+        ret = StringIO.StringIO("".join(r for r in ih
                                           if r[:4] != "ATOM"
                                           or not _h_re.match(r[12:16])))
     return ret
