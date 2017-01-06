@@ -15,6 +15,7 @@ class PDBAlignError(RuntimeError):
 
 
 seq1 = functools.partial(seq1, custom_map=protein_letters_3to1)
+allowed_het_res = dict(MSE="M")
 
 def align(seq1, seq2):
     matrix = MatrixInfo.blosum100
@@ -38,7 +39,16 @@ def struct_to_seq(structure, chains=None):
         # Don't include all-het chain
         if all(res.get_id()[0].strip() for res in ch.child_list):
             continue
-        atom_seq_dict[ch.id] = "".join(seq1(res.resname)
-                                       for res in ch.child_list
-                                       if res.get_id()[0] == " ")
+        sequence = list()
+        for res in ch.child_list:
+            if res.get_id()[0] == " ":
+                sequence.append(seq1(res.resname))
+            else:
+                het_res1 = allowed_het_res.get(res.resname)
+                if het_res1 is not None:
+                    sequence.append(het_res1)
+        #atom_seq_dict[ch.id] = "".join(seq1(res.resname)
+                                       #for res in ch.child_list
+                                       #if res.get_id()[0] == " ")
+        atom_seq_dict[ch.id] = "".join(sequence)
     return atom_seq_dict
