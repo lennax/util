@@ -159,7 +159,7 @@ def bash_wrap(cmd, module=None):
     :returns: str
     """
     if not isinstance(cmd, basestring):
-        cmd = " ".join(cmd)
+        cmd = subprocess.list2cmdline(cmd)
     if module is None:
         module_cmd = ""
     else:
