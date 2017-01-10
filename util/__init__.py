@@ -1,4 +1,4 @@
-# Copyright 2013-2015 Lenna X. Peterson. All rights reserved.
+# Copyright 2013-2017 Lenna X. Peterson. All rights reserved.
 
 # PDB related
 from atom_data import AtomData
@@ -35,3 +35,6 @@ from meta import classproperty
 from util_methods import venn, head, range_overlap
 from util_methods import split_index, dict_slice
 from util_methods import parse_mer
+
+# Pandas
+from util_methods import fake_agg

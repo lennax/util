@@ -1,4 +1,4 @@
-# Copyright 2013-2015 Lenna X. Peterson. All rights reserved.
+# Copyright 2013-2017 Lenna X. Peterson. All rights reserved.
 
 import ConfigParser
 import errno
@@ -283,6 +283,14 @@ def dict_slice(the_dict, desired_keys):
     desired_keys: keys to return
     """
     return {key: the_dict.pop(key) for key in desired_keys}
+
+def fake_agg(g):
+    """fix pandas pivot table handling of lists"""
+    T = tuple(g)
+    if len(T) > 1:
+        return T
+    else:
+        return T[0]
 
 def split_index(s, i):
     """Split a string `s` at the specified index `i`"""
