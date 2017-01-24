@@ -56,6 +56,7 @@ class CopyToHost(object):
         subprocess.check_call(cmd)
 
     def __enter__(self):
+        os.chdir(self.new_wd)
         self.push()
         return self
 
@@ -65,6 +66,7 @@ class CopyToHost(object):
         finally:
             #logging.info("Removing temporary directory")
             shutil.rmtree(self.tmpdir)
+            os.chdir(self.wd)
 
 
 def create_insert_statement(tablename, columns):
